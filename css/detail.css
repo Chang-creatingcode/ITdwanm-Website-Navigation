@@ -1,0 +1,496 @@
+/* Microsoft Store 风格详情页 */
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.detail-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+}
+
+/* 模糊背景头部 */
+.ms-background-header {
+    position: relative;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+.ms-background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+
+.ms-background-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70%;
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0.9) 80%,
+        rgba(255, 255, 255, 1) 100%
+    );
+    pointer-events: none;
+}
+
+.ms-back-button-floating {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.ms-back-button-floating:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+/* 内容区域 */
+.ms-content {
+    padding: 0;
+}
+
+/* 截图轮播 */
+.ms-screenshots {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    overflow: hidden;
+}
+
+.ms-screenshot-carousel {
+    display: flex;
+    gap: 15px;
+    padding: 0 20px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.ms-screenshot-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.ms-screenshot-item {
+    flex: 0 0 auto;
+    width: 280px;
+    height: 160px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.ms-screenshot-item:hover {
+    transform: translateY(-5px);
+}
+
+.ms-screenshot-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 应用信息卡片 */
+.ms-app-card {
+    padding: 30px 20px;
+    background-color: white;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.ms-app-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.ms-app-icon {
+    width: 120px;
+    height: 120px;
+    border-radius: 24px;
+    background-color: #f5f5f5;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+.ms-app-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ms-app-info {
+    flex: 1;
+}
+
+.ms-app-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.ms-app-developer {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* 评分区域 */
+.ms-rating {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.ms-rating-score {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0078d4;
+}
+
+.ms-rating-stars {
+    display: flex;
+    gap: 2px;
+}
+
+.ms-star {
+    color: #ffcc00;
+    font-size: 20px;
+}
+
+.ms-rating-count {
+    font-size: 14px;
+    color: #666;
+}
+
+/* 操作按钮 */
+.ms-actions {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.ms-btn {
+    padding: 12px 28px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    min-width: 120px;
+    justify-content: center;
+}
+
+.ms-btn-primary {
+    background-color: #0078d4;
+    color: white;
+}
+
+.ms-btn-primary:hover {
+    background-color: #0063b1;
+    transform: translateY(-1px);
+}
+
+.ms-btn-secondary {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.ms-btn-secondary:hover {
+    background-color: #e0e0e0;
+}
+
+/* 标签 */
+.ms-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.ms-tag {
+    background-color: #f0f0f0;
+    color: #666;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 14px;
+}
+
+/* 详情部分 */
+.ms-details {
+    padding: 30px 20px;
+}
+
+.ms-section {
+    margin-bottom: 40px;
+}
+
+.ms-section-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.ms-description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 特性列表 */
+.ms-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ms-feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.ms-feature-item:hover {
+    background-color: #e8f4fd;
+}
+
+.ms-feature-icon {
+    color: #0078d4;
+    font-size: 20px;
+    margin-top: 2px;
+}
+
+.ms-feature-text {
+    flex: 1;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* 系统要求 */
+.ms-system-requirements {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.ms-requirement-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.ms-requirement-item:last-child {
+    border-bottom: none;
+}
+
+.ms-requirement-label {
+    font-weight: 600;
+    color: #333;
+}
+
+.ms-requirement-value {
+    color: #666;
+}
+
+/* 相关链接 */
+.ms-related-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.ms-related-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background-color: #f8f9fa;
+    color: #0078d4;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.ms-related-link:hover {
+    background-color: #e8f4fd;
+}
+
+/* 404页面 */
+.ms-not-found {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.ms-not-found h1 {
+    font-size: 64px;
+    margin-bottom: 20px;
+    color: #0078d4;
+}
+
+.ms-not-found p {
+    font-size: 20px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* 应用信息区样式 */
+.ms-app-info-section {
+    margin-top: -60px;
+    position: relative;
+    z-index: 5;
+}
+
+.ms-app-info-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 25px;
+    padding: 0 20px;
+    margin-bottom: 30px;
+}
+
+.ms-app-icon-large {
+    width: 140px;
+    height: 140px;
+    border-radius: 28px;
+    background-color: white;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+    border: 4px solid white;
+}
+
+.ms-app-icon-large img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ms-app-details {
+    flex: 1;
+    color: white;
+}
+
+.ms-app-title-main {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.ms-app-meta {
+    font-size: 16px;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.ms-app-date {
+    margin-left: 10px;
+}
+
+.ms-main-actions {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.ms-btn-large {
+    padding: 14px 32px;
+    font-size: 18px;
+    min-width: 140px;
+}
+
+.ms-app-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.ms-app-tags .ms-tag {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 主内容区域 */
+.ms-main-content {
+    padding: 0 20px 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* 卡片样式 */
+.ms-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ms-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.ms-card-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #0078d4;
+}

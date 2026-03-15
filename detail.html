@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>详情 - IT dwanm 网址导航 NEXT</title>
+    <style>
+        /* Microsoft Store 风格详情页 */
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .detail-container {
+            width: 100%;
+            background-color: white;
+            border-radius: 0;
+            box-shadow: none;
+            padding: 0;
+        }
+        
+        /* 模糊背景头部 */
+        .ms-background-header {
+            position: relative;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden;
+        }
+        
+        .ms-background-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+        
+        .ms-background-gradient {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 70%;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(255, 255, 255, 0.5) 50%,
+                rgba(255, 255, 255, 0.9) 80%,
+                rgba(255, 255, 255, 1) 100%
+            );
+            pointer-events: none;
+        }
+        
+        .ms-back-button-floating {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+        
+        .ms-back-button-floating:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        
+        /* 内容区域 */
+        .ms-content {
+            padding: 0;
+        }
+        
+        /* 截图轮播 */
+        .ms-screenshots {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            overflow: hidden;
+        }
+        
+        .ms-screenshot-carousel {
+            display: flex;
+            gap: 15px;
+            padding: 0 20px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .ms-screenshot-carousel::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .ms-screenshot-item {
+            flex: 0 0 auto;
+            width: 280px;
+            height: 160px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .ms-screenshot-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .ms-screenshot-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* 应用信息卡片 */
+        .ms-app-card {
+            padding: 30px 20px;
+            background-color: white;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .ms-app-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .ms-app-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 24px;
+            background-color: #f5f5f5;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            flex-shrink: 0;
+        }
+        
+        .ms-app-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .ms-app-info {
+            flex: 1;
+        }
+        
+        .ms-app-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .ms-app-developer {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        /* 评分区域 */
+        .ms-rating {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .ms-rating-score {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0078d4;
+        }
+        
+        .ms-rating-stars {
+            display: flex;
+            gap: 2px;
+        }
+        
+        .ms-star {
+            color: #ffcc00;
+            font-size: 20px;
+        }
+        
+        .ms-rating-count {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* 操作按钮 */
+        .ms-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .ms-btn {
+            padding: 12px 28px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            min-width: 120px;
+            justify-content: center;
+        }
+        
+        .ms-btn-primary {
+            background-color: #0078d4;
+            color: white;
+        }
+        
+        .ms-btn-primary:hover {
+            background-color: #0063b1;
+            transform: translateY(-1px);
+        }
+        
+        .ms-btn-secondary {
+            background-color: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        
+        .ms-btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+        
+        /* 标签 */
+        .ms-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .ms-tag {
+            background-color: #f0f0f0;
+            color: #666;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 14px;
+        }
+        
+        /* 详情部分 */
+        .ms-details {
+            padding: 30px 20px;
+        }
+        
+        .ms-section {
+            margin-bottom: 40px;
+        }
+        
+        .ms-section-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .ms-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        /* 特性列表 */
+        .ms-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .ms-feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+        }
+        
+        .ms-feature-item:hover {
+            background-color: #e8f4fd;
+        }
+        
+        .ms-feature-icon {
+            color: #0078d4;
+            font-size: 20px;
+            margin-top: 2px;
+        }
+        
+        .ms-feature-text {
+            flex: 1;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        
+        /* 系统要求 */
+        .ms-system-requirements {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .ms-requirement-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .ms-requirement-item:last-child {
+            border-bottom: none;
+        }
+        
+        .ms-requirement-label {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .ms-requirement-value {
+            color: #666;
+        }
+        
+        /* 相关链接 */
+        .ms-related-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .ms-related-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background-color: #f8f9fa;
+            color: #0078d4;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        
+        .ms-related-link:hover {
+            background-color: #e8f4fd;
+        }
+        
+        /* 404页面 */
+        .ms-not-found {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        
+        .ms-not-found h1 {
+            font-size: 64px;
+            margin-bottom: 20px;
+            color: #0078d4;
+        }
+        
+        .ms-not-found p {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        /* 应用信息区样式 */
+        .ms-app-info-section {
+            margin-top: -60px;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .ms-app-info-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 25px;
+            padding: 0 20px;
+            margin-bottom: 30px;
+        }
+        
+        .ms-app-icon-large {
+            width: 140px;
+            height: 140px;
+            border-radius: 28px;
+            background-color: white;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            flex-shrink: 0;
+            border: 4px solid white;
+        }
+        
+        .ms-app-icon-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .ms-app-details {
+            flex: 1;
+            color: white;
+        }
+        
+        .ms-app-title-main {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ms-app-meta {
+            font-size: 16px;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .ms-app-date {
+            margin-left: 10px;
+        }
+        
+        .ms-main-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .ms-btn-large {
+            padding: 14px 32px;
+            font-size: 18px;
+            min-width: 140px;
+        }
+        
+        .ms-app-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .ms-app-tags .ms-tag {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        /* 主内容区域 */
+        .ms-main-content {
+            padding: 0 20px 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        /* 卡片样式 */
+        .ms-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .ms-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .ms-card-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #0078d4;
+        }
+        
+        .ms-card-content {
+            color: #333;
+        }
+        
+        /* 截图轮播样式 */
+        .ms-screenshot-carousel {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #0078d4 #f0f0f0;
+            padding-bottom: 10px;
+        }
+        
+        .ms-screenshot-carousel::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .ms-screenshot-carousel::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 3px;
+        }
+        
+        .ms-screenshot-carousel::-webkit-scrollbar-thumb {
+            background: #0078d4;
+            border-radius: 3px;
+        }
+        
+        .ms-screenshot-carousel::-webkit-scrollbar-thumb:hover {
+            background: #005a9e;
+        }
+        
+        /* 详情文本 */
+        .ms-description-text {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #333;
+            margin: 0;
+        }
+        
+        /* 评分显示 */
+        .ms-rating-display {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .ms-rating-overview {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .ms-rating-score-large {
+            font-size: 48px;
+            font-weight: 700;
+            color: #0078d4;
+            line-height: 1;
+        }
+        
+        .ms-rating-stars-large {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .ms-rating-stars-large .ms-star {
+            font-size: 24px;
+        }
+        
+        .ms-rating-count-text {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .ms-rating-bar {
+            flex: 1;
+            max-width: 400px;
+        }
+        
+        .ms-rating-progress {
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .ms-rating-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0078d4 0%, #00b74a 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        /* 功能列表 */
+        .ms-features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .ms-feature-list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .ms-feature-list-item:hover {
+            background-color: #e8f4fd;
+        }
+        
+        .ms-feature-list-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* 系统要求网格 */
+        .ms-system-requirements-grid {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .ms-requirement-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .ms-requirement-row:hover {
+            background-color: #e8f4fd;
+        }
+        
+        .ms-requirement-label {
+            font-weight: 600;
+            color: #333;
+            min-width: 120px;
+        }
+        
+        .ms-requirement-value {
+            color: #666;
+            flex: 1;
+            text-align: right;
+        }
+        
+        /* 更多信息网格 */
+        .ms-more-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .ms-info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .ms-info-label {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .ms-info-value {
+            font-size: 16px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        /* 相关链接部分 */
+        .ms-related-links-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .ms-section-subtitle {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .ms-related-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .ms-related-link-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            color: #0078d4;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+        
+        .ms-related-link-card:hover {
+            background-color: #e8f4fd;
+            border-color: #0078d4;
+            transform: translateY(-2px);
+        }
+        
+        .ms-link-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        
+        .ms-link-text {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .ms-background-header {
+                height: 150px;
+            }
+            
+            .ms-app-info-section {
+                margin-top: -40px;
+            }
+            
+            .ms-app-info-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .ms-app-icon-large {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .ms-app-title-main {
+                font-size: 28px;
+            }
+            
+            .ms-main-actions {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .ms-rating-display {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .ms-rating-bar {
+                max-width: 100%;
+            }
+            
+            .ms-screenshot-item {
+                width: 240px;
+                height: 140px;
+            }
+            
+            .ms-more-info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .ms-related-links-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .ms-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+
+        <!-- 详情内容区域 -->
+        <div id="detailContainer">
+            <!-- 详情内容将通过JavaScript动态生成 -->
+        </div>
+
+        <!-- 底部信息 -->
+        <footer class="footer">
+            <p>© 2026 IT dwanm 网址导航 NEXT. 好像没有版权[苦笑]只是一个自用的小网站而已</p>
+        </footer>
+    </div>
+
+    <!-- 引入JavaScript -->
+    <script src="js/data.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取URL参数
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = parseInt(urlParams.get('id'));
+            
+            // 获取详情容器
+            const detailContainer = document.getElementById('detailContainer');
+            
+            // 查找对应的数据
+            const item = websiteData.find(item => item.id === id);
+            
+            // 如果找到数据，渲染详情页
+            if (item) {
+                renderDetail(item);
+            } else {
+                // 未找到数据，显示404页面
+                detailContainer.innerHTML = `
+                    <div class="ms-background-header" style="background-image: url('https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/79c435a671994d86a420a376d88450c8~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260315191315820B29C5641F3C0525F5&rrcfp=f06b921b&x-expires=1776165221&x-signature=GNYNpZjGqhwOFVpDVbJVWKJHX54%3D')">
+                        <div class="ms-background-overlay"></div>
+                        <div class="ms-background-gradient"></div>
+                        <button class="ms-back-button-floating" onclick="window.location.href='index.html'">
+                            ←
+                        </button>
+                    </div>
+                    
+                    <div class="ms-not-found">
+                        <h1>404</h1>
+                        <p>未找到该网址信息</p>
+                        <button class="ms-btn ms-btn-primary" onclick="window.location.href='index.html'">返回首页</button>
+                    </div>
+                `;
+            }
+            
+            // 返回首页链接点击事件
+            document.addEventListener('click', function(e) {
+                if (e.target.matches('.back-link') || e.target.closest('.back-link')) {
+                    window.location.href = 'index.html';
+                }
+                
+                // 访问网站按钮点击事件
+                if (e.target.matches('.btn-visit') || e.target.closest('.btn-visit')) {
+                    if (item.url && item.url !== '#') {
+                        window.open(item.url, '_blank');
+                    } else {
+                        alert('该链接暂未设置');
+                    }
+                }
+            });
+        });
+        
+        // 渲染详情页函数
+        function renderDetail(item) {
+            const detailContainer = document.getElementById('detailContainer');
+            
+            // 构建分类和标签的显示文本
+            const categoryMap = {
+                'Mythware': '极域工具',
+                'games': '小游戏',
+            };
+            
+            const tagMap = {
+                'ai': 'AI制作',
+                'student-make': '同学自制',
+                'large-scale': '大型平台',
+                'all': '全部平台'
+            };
+            
+            const categoryText = categoryMap[item.category] || item.category;
+            const tagsText = item.tags.map(tag => tagMap[tag] || tag).join('、');
+            
+            // 获取详情数据
+            const details = item.details || {};
+            
+            // 渲染系统要求
+            let systemRequirementsHTML = '';
+            if (details.systemRequirements) {
+                for (const [key, value] of Object.entries(details.systemRequirements)) {
+                    // 将键名转换为更友好的显示格式
+                    const label = key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1');
+                    systemRequirementsHTML += `
+                        <div class="info-item">
+                            <label>${label}</label>
+                            <value>${value}</value>
+                        </div>
+                    `;
+                }
+            }
+            
+            // 渲染特性列表
+            let featuresHTML = '';
+            if (details.features && details.features.length > 0) {
+                featuresHTML = details.features.map(feature => `
+                    <li class="feature-item">${feature}</li>
+                `).join('');
+                featuresHTML = `<ul class="feature-list">${featuresHTML}</ul>`;
+            }
+            
+            // 渲染相关链接
+            let relatedLinksHTML = '';
+            if (details.relatedLinks && details.relatedLinks.length > 0) {
+                relatedLinksHTML = details.relatedLinks.map(link => `
+                    <a href="${link.url}" target="_blank" class="related-link">${link.name}</a>
+                `).join('');
+                relatedLinksHTML = `<div class="related-links">${relatedLinksHTML}</div>`;
+            }
+            
+            // 渲染评分
+            let ratingHTML = '';
+            if (details.rating) {
+                const fullStars = Math.floor(details.rating);
+                const hasHalfStar = details.rating % 1 >= 0.5;
+                const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+                
+                let starsHTML = '★'.repeat(fullStars);
+                if (hasHalfStar) starsHTML += '½';
+                starsHTML += '☆'.repeat(emptyStars);
+                
+                ratingHTML = `
+                    <div class="info-item">
+                        <label>评分</label>
+                        <value class="rating">${starsHTML} (${details.rating}/5)</value>
+                    </div>
+                `;
+            }
+            
+            // 渲染详情内容
+            detailContainer.innerHTML = `
+                <!-- 模糊背景和返回按钮 -->
+                <div class="ms-background-header" style="background-image: url('${item.previewImage || item.icon}')">
+                    <div class="ms-background-overlay"></div>
+                    <div class="ms-background-gradient"></div>
+                    <button class="ms-back-button-floating" onclick="window.location.href='index.html'">
+                        ←
+                    </button>
+                </div>
+                
+                <div class="ms-content">
+                    <!-- 应用信息区 - 与背景衔接，无背景 -->
+                    <div class="ms-app-info-section">
+                        <div class="ms-app-info-container">
+                            <div class="ms-app-icon-large">
+                                <img src="${item.icon}" alt="${item.title}">
+                            </div>
+                            <div class="ms-app-details">
+                                <h1 class="ms-app-title-main">${item.title}</h1>
+                                <div class="ms-app-meta">
+                                    <span class="ms-app-developer">${details.developer || '未知开发者'}</span>
+                                    ${details.releaseDate ? `<span class="ms-app-date">• ${details.releaseDate}</span>` : ''}
+                                </div>
+                                
+                                <!-- 操作按钮 -->
+                                <div class="ms-main-actions">
+                                    <button class="ms-btn ms-btn-primary ms-btn-large btn-visit">
+                                        🌐 访问网站
+                                    </button>
+                                    <button class="ms-btn ms-btn-secondary" onclick="window.location.href='index.html'">
+                                        ← 返回
+                                    </button>
+                                </div>
+                                
+                                <!-- 标签 -->
+                                <div class="ms-app-tags">
+                                    <span class="ms-tag">${categoryText}</span>
+                                    ${item.tags.map(tag => `<span class="ms-tag">${tagMap[tag] || tag}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 主内容区域 -->
+                    <div class="ms-main-content">
+                        <!-- 屏幕截图板块 -->
+                        <div class="ms-card">
+                            <h2 class="ms-card-title">屏幕截图</h2>
+                            <div class="ms-screenshot-carousel">
+                                ${renderScreenshots(item)}
+                            </div>
+                        </div>
+                        
+                        <!-- 详情介绍板块 -->
+                        <div class="ms-card">
+                            <h2 class="ms-card-title">详情</h2>
+                            <div class="ms-card-content">
+                                <p class="ms-description-text">
+                                    ${details.fullDescription || item.description || '暂无详细介绍。这是一个功能强大的工具，为用户提供高效便捷的服务体验。无论是日常使用还是专业工作，都能满足您的各种需求。'}
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- 评分板块 -->
+                        <div class="ms-card">
+                            <h2 class="ms-card-title">评分</h2>
+                            <div class="ms-card-content">
+                                <div class="ms-rating-display">
+                                    <div class="ms-rating-overview">
+                                        <div class="ms-rating-score-large">${details.rating || '0.0'}</div>
+                                        <div class="ms-rating-stars-large">
+                                            ${renderStars(details.rating || 0)}
+                                        </div>
+                                        <div class="ms-rating-count-text">基于 ${details.reviewCount || '0'} 条评价</div>
+                                    </div>
+                                    <div class="ms-rating-bar">
+                                        <div class="ms-rating-progress">
+                                            <div class="ms-rating-progress-fill" style="width: ${(details.rating || 0) / 5 * 100}%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 功能板块 -->
+                        ${details.features && details.features.length > 0 ? `
+                        <div class="ms-card">
+                            <h2 class="ms-card-title">功能</h2>
+                            <div class="ms-card-content">
+                                <ul class="ms-features-list">
+                                    ${details.features.map(feature => `
+                                        <li class="ms-feature-list-item">
+                                            <div class="ms-feature-icon">✓</div>
+                                            <div class="ms-feature-text">${feature}</div>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                        ` : ''}
+                        
+                        <!-- 新增功能板块 -->
+                        ${details.newFeatures && details.newFeatures.length > 0 ? `
+                        <div class="ms-card">
+                            <h2 class="ms-card-title">新增功能</h2>
+                            <div class="ms-card-content">
+                                <ul class="ms-features-list">
+                                    ${details.newFeatures.map(feature => `
+                                        <li class="ms-feature-list-item">
+                                            <div class="ms-feature-icon">✨</div>
+                                            <div class="ms-feature-text">${feature}</div>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                        ` : ''}
+                        
+                        <!-- 系统要求板块 -->
+                        ${details.systemRequirements ? `
+                        <div class="ms-card">
+                            <h2 class="ms-card-title">系统要求</h2>
+                            <div class="ms-card-content">
+                                <div class="ms-system-requirements-grid">
+                                    ${Object.entries(details.systemRequirements).map(([key, value]) => {
+                                        const label = key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1');
+                                        return `
+                                            <div class="ms-requirement-row">
+                                                <div class="ms-requirement-label">${label}</div>
+                                                <div class="ms-requirement-value">${value}</div>
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            </div>
+                        </div>
+                        ` : ''}
+                        
+                        <!-- 更多信息板块 -->
+                        <div class="ms-card">
+                            <h2 class="ms-card-title">更多信息</h2>
+                            <div class="ms-card-content">
+                                <div class="ms-more-info-grid">
+                                    <div class="ms-info-item">
+                                        <div class="ms-info-label">发布日期</div>
+                                        <div class="ms-info-value">${details.releaseDate || '未知'}</div>
+                                    </div>
+                                    <div class="ms-info-item">
+                                        <div class="ms-info-label">开发者</div>
+                                        <div class="ms-info-value">${details.developer || '未知'}</div>
+                                    </div>
+                                    <div class="ms-info-item">
+                                        <div class="ms-info-label">分类</div>
+                                        <div class="ms-info-value">${categoryText}</div>
+                                    </div>
+                                    <div class="ms-info-item">
+                                        <div class="ms-info-label">标签</div>
+                                        <div class="ms-info-value">${tagsText}</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 相关链接 -->
+                                ${details.relatedLinks && details.relatedLinks.length > 0 ? `
+                                <div class="ms-related-links-section">
+                                    <h3 class="ms-section-subtitle">相关链接</h3>
+                                    <div class="ms-related-links-grid">
+                                        ${details.relatedLinks.map(link => `
+                                            <a href="${link.url}" target="_blank" class="ms-related-link-card">
+                                                <div class="ms-link-icon">🔗</div>
+                                                <div class="ms-link-text">${link.name}</div>
+                                            </a>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // 渲染星星评分
+            function renderStars(rating) {
+                const fullStars = Math.floor(rating);
+                const hasHalfStar = rating % 1 >= 0.5;
+                const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+                
+                let starsHTML = '';
+                starsHTML += '★'.repeat(fullStars);
+                if (hasHalfStar) starsHTML += '½';
+                starsHTML += '☆'.repeat(emptyStars);
+                
+                return starsHTML.split('').map(char => `<span class="ms-star">${char}</span>`).join('');
+            }
+            
+            // 渲染截图
+            function renderScreenshots(item) {
+                const screenshots = details.screenshots || [];
+                const previewImage = item.previewImage || item.icon;
+                
+                // 如果没有截图，使用预览图或图标
+                if (screenshots.length === 0) {
+                    return `
+                        <div class="ms-screenshot-item">
+                            <img src="${previewImage}" alt="${item.title} 预览">
+                        </div>
+                    `;
+                }
+                
+                // 渲染所有截图
+                return screenshots.map(screenshot => `
+                    <div class="ms-screenshot-item">
+                        <img src="${screenshot}" alt="${item.title} 截图">
+                    </div>
+                `).join('');
+            }
+            
+            // 移除旧的样式添加代码，使用CSS类定义的样式
+        }
+    </script>
+</body>
+</html>

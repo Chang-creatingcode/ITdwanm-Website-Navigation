@@ -1,0 +1,82 @@
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITdawnm网址导航 NEXT</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 顶部提示信息 -->
+    <div class="top-notice">
+        <p>该网站所有资源仅供学习交流，请勿用于其他用途！</p>
+    </div>
+    <div class="container">
+        <!-- 顶部导航栏 -->
+        <header class="header">
+            <div class="logo">
+                <h1>NEXT. <span>IT DAWNM</span> <small>beta</small></h1>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="搜索...">
+                <button id="searchBtn">搜索</button>
+            </div>
+            <div class="user">
+                <a href="#" class="user-link">
+                    <i class="icon-user"></i>
+                </a>
+            </div>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <main class="main-content">
+            <!-- 左侧分类导航 -->
+            <aside class="sidebar">
+                <div class="category">
+                    <div class="category-header">
+                        <h3>全部分类</h3>
+                    </div>
+                    <ul class="category-list" id="categoryList">
+                        <li class="category-item active" data-category="all">
+                            <a href="#" class="category-link">全部</a>
+                        </li>
+                        <li class="category-item" data-category="mythware">
+                            <a href="#" class="category-link">极域工具</a>
+                        </li>
+                        <li class="category-item" data-category="games">
+                            <a href="#" class="category-link">小游戏</a>
+
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- 右侧内容区域 -->
+            <section class="content">
+                <!-- 标签筛选 -->
+                <div class="tags">
+                    <div class="tag-group">
+                        <span class="tag active" data-tag="all">全部</span>
+                        <span class="tag" data-tag="student-make">同学自制</span>
+                        <span class="tag" data-tag="ai">AI制作</span>
+                        <span class="tag" data-tag="large-scale">大型平台</span>
+
+                    </div>
+                </div>
+
+                <!-- 网址卡片区域 -->
+                <div class="cards" id="cardsContainer">
+                    <!-- 卡片将通过JavaScript动态生成 -->
+                </div>
+            </section>
+        </main>
+
+        <!-- 底部信息 -->
+        <footer class="footer">
+            <p> 2026 IT dwanm 网址导航 NEXT. 好像没有版权[苦笑],只是一个自用的小网站而已啦！</p>
+        </footer>
+    </div>
+
+    <!-- 引入JavaScript -->
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+
+</body></html>
